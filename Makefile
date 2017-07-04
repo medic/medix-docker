@@ -16,6 +16,7 @@ build:
 
 run:
 	mkdir -p temp/root/couchdb
+	# Expose all the services for dev/debug.  Really we should only need 80 & 443
 	docker run -i -t \
 		-p 8080:5984 \
 		-p 8081:5988 \
