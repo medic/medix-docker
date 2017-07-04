@@ -1,5 +1,7 @@
 .PHONY: default build run kill
 
+LOCAL_COUCH_PORT=5994
+
 default: build run
 
 build:
@@ -8,7 +10,7 @@ build:
 run:
 	mkdir -p temp/root/couchdb
 	docker run \
-		-p 5994:5984 \
+		-p ${LOCAL_COUCH_PORT}:5984 \
 		-v couchdb:/usr/local/var/lib/couchdb \
 		-e COUCHDB_DBNAME=medic \
 		-e COUCHDB_USERNAME=admin \
