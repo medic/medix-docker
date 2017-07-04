@@ -21,6 +21,10 @@ RUN apt-get install -y vim
 
 RUN npm install -g horticulturalist@0.1.8
 
+RUN apt-get install -y nginx
+
+RUN useradd nginx
+
 ADD build/dist /alex-and-dave
 
 CMD /alex-and-dave/docker-startup

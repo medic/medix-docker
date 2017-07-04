@@ -8,7 +8,14 @@ is_200() {
 	return $?
 }
 
-# TODO maybe a database password?
+echo "[$0] patching nginx config..."
+# TODO should these files be setup in Dockerfile?
+cp /alex-and-dave/nginx.conf /etc/nginx/nginx.conf
+mkdir -p /etc/nginx/private
+cp /alex-and-dave/nginx.crt /etc/nginx/private/default.crt;
+cp /alex-and-dave/nginx.key /etc/nginx/private/default.key;
+service nginx reload
+
 couchUrl=http://admin:pass@localhost:5984
 ddocUrl=$couchUrl/medic/_design/medic
 

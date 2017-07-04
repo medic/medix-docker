@@ -20,6 +20,7 @@ run:
 	mkdir -p temp/root/couchdb
 	docker run -i -t \
 		-p ${LOCAL_COUCH_PORT}:5984 \
+		-p 5999:80 \
 		-v couchdb:/usr/local/var/lib/couchdb \
 		medix
 
