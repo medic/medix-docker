@@ -2,12 +2,19 @@
 
 is_200() {
 	local url="$1"
-	local status="$(curl -sL -w "%{http_code}\\n" "$url" > /dev/null)"
+	local status="$(curl -o /dev/null --silent --head --write-out '%{http_code}\n' "$url")"
 	echo "$url return status: $status"
 	[ "$status" = 200 ]
 	return $?
 }
-ddocUrl=http://localhost:5984/medic/_design/medic 
+
+# TODO maybe a database password?
+couchUrl=http://localhost:5984
+ddocUrl=$couchUrl/medic/_design/medic
+
+echo "[$0] Overwriting couch settings..."
+cp /alex-and-dave/local.ini /etc/couchdb/local.ini
+chown -R couchdb:couchdb /etc/couchdb/
 
 echo "[$0] Starting couch..."
 mkdir -p /var/run/couchdb
@@ -18,17 +25,17 @@ su couchdb -c couchdb &
 # TODO couch service doesn't start properly so we just do it manually here :-/
 
 echo "[$0] Waiting for couch..."
-sleep 5
-# TODO actually wait for couch?
-curl http://localhost:5984
+while ! is_200 "$couchUrl"; do
+	echo "[$0] Couch not started yet..."
+	sleep 1
+done
 
 echo "[$0] Creating medic db..."
-curl -X PUT http://localhost:5984/medic
+curl -X PUT "$couchUrl"/medic
 
 echo "[$0] Deploying ddoc..."
-bash
 is_200 "$ddocUrl" ||
-		curl http://admin:pass@localhost:5984/medic/_design/medic -X PUT --data-binary @/alex-and-dave/ddoc.json
+		curl $couchUrl/medic/_design/medic -X PUT --data-binary @/alex-and-dave/ddoc.json
 
 echo "[$0] Checking ddoc exists..."
 is_200 "$ddocUrl" || (echo 'DDoc not found.' && exit 1)

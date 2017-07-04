@@ -10,7 +10,7 @@ clean:
 build:
 	mkdir -p build/dist
 	wget -c --output-document build/dist/ddoc.json 'https://staging.dev.medicmobile.org/_couch/builds/upgrades-from-api?attachments=true'
-	cp -r src/root/* build/dist/
+	cp -r src/* build/dist/
 	docker build --tag medix .
 
 run:
