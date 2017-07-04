@@ -35,7 +35,7 @@ curl -X PUT "$couchUrl"/medic
 
 echo "[$0] Deploying ddoc..."
 is_200 "$ddocUrl" ||
-		curl $couchUrl/medic/_design/medic -X PUT --data-binary @/alex-and-dave/ddoc.json
+		curl $ddocUrl -X PUT --data-binary @/alex-and-dave/ddoc.json
 
 echo "[$0] Checking ddoc exists..."
 is_200 "$ddocUrl" || (echo 'DDoc not found.' && exit 1)

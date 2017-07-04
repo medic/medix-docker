@@ -9,7 +9,10 @@ clean:
 
 build:
 	mkdir -p build/dist
-	wget -c --output-document build/dist/ddoc.json 'https://staging.dev.medicmobile.org/_couch/builds/upgrades-from-api?attachments=true'
+	wget -c --output-document build/ddoc.json \
+		--header='Accept: application/json' \
+		'https://staging.dev.medicmobile.org/_couch/builds/upgrades-from-api?attachments=true'
+	jq 'del(._rev)' build/ddoc.json > build/dist/ddoc.json
 	cp -r src/* build/dist/
 	docker build --tag medix .
 
