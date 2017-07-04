@@ -19,7 +19,7 @@ RUN apt-get install -y vim
 
 ### REMEMBER TO ADD ALL APT-GET INSTALL TO END OF LIST ###
 
-RUN npm install -g horticulturalist@0.1.8
+RUN npm install -g horticulturalist@0.1.9
 
 RUN apt-get install -y nginx
 
