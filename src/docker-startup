@@ -1,0 +1,42 @@
+#!/bin/bash -eu
+
+is_200() {
+	local url="$1"
+	local status="$(curl -sL -w "%{http_code}\\n" "$url" > /dev/null)"
+	echo "$url return status: $status"
+	[ "$status" = 200 ]
+	return $?
+}
+ddocUrl=http://localhost:5984/medic/_design/medic 
+
+echo "[$0] Starting couch..."
+mkdir -p /var/run/couchdb
+mkdir -p /var/log/couchdb
+chown couchdb:couchdb /var/run/couchdb
+chown couchdb:couchdb /var/log/couchdb
+su couchdb -c couchdb &
+# TODO couch service doesn't start properly so we just do it manually here :-/
+
+echo "[$0] Waiting for couch..."
+sleep 5
+# TODO actually wait for couch?
+curl http://localhost:5984
+
+echo "[$0] Creating medic db..."
+curl -X PUT http://localhost:5984/medic
+
+echo "[$0] Deploying ddoc..."
+bash
+is_200 "$ddocUrl" ||
+		curl http://admin:pass@localhost:5984/medic/_design/medic -X PUT --data-binary @/alex-and-dave/ddoc.json
+
+echo "[$0] Checking ddoc exists..."
+is_200 "$ddocUrl" || (echo 'DDoc not found.' && exit 1)
+
+echo "[$0] Starting horticulturalist..."
+# TODO this should be done as a system.d service or whatever
+# TODO for now fork this into background
+adduser --system horticulturalist
+su horticulturalist -c horticulturalist &
+
+echo "[$0] Startup complete."

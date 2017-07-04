@@ -1,6 +1,0 @@
-#!/bin/bash -eu
-
-echo 'Helo from me to you'
-curl http://localhost:5984
-curl -X PUT http://localhost:5984/medic
-curl http://localhost:5984/medic

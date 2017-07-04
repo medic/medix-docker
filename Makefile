@@ -2,20 +2,20 @@
 
 LOCAL_COUCH_PORT=5994
 
-default: clean build run
+default: build run
 
 clean:
 	rm -rf build
 
 build:
 	mkdir -p build/dist
+	wget -c --output-document build/dist/ddoc.json 'https://staging.dev.medicmobile.org/_couch/builds/upgrades-from-api?attachments=true'
 	cp -r src/root/* build/dist/
-	wget -c -o build/dist/ddoc.json 'https://staging.dev.medicmobile.org/_couch/builds/upgrades-from-api?attachments=true'
 	docker build --tag medix .
 
 run:
 	mkdir -p temp/root/couchdb
-	docker run -i \
+	docker run -i -t \
 		-p ${LOCAL_COUCH_PORT}:5984 \
 		-v couchdb:/usr/local/var/lib/couchdb \
 		medix

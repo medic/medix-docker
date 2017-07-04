@@ -9,7 +9,12 @@ RUN apt-get install -y couchdb
 
 RUN apt-get install -y npm
 
-RUN npm install -g horticulturalist
+RUN apt-get install -y less
+RUN apt-get install -y vim
+
+### REMEMBER TO ADD ALL APT-GET INSTALL TO END OF LIST ###
+
+RUN npm install -g horticulturalist@0.1.4
 
 ADD build/dist /alex-and-dave
 
