@@ -26,3 +26,8 @@ You can upgrade to any build of the medic stack available in the [builds reposit
 	curl --header "Content-Type: application/json" \
 	     --data '{ "version": "upgrades-from-api" \
 	     http://admin:pass@localhost:5988/api/upgrade 
+
+# TODO
+
+* Make sure that horticulturalist restarts medic-api and medic-sentinel on upgrade
+* Fix all the inline TODOs
