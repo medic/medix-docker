@@ -1,6 +1,8 @@
 Dockerised Medic webapp stack
 =============================
 
+# Please note, this is **_experimental_**.
+
 Run medic's stack using Docker.
 
 To get started:
