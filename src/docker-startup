@@ -64,3 +64,7 @@ export COUCH_NODE_NAME="couchdb@localhost"
 su horticulturalist -c 'horticulturalist --local' &
 
 echo "[$0] Startup complete."
+
+# Keep running after startup, and allow interaction with the local machine:
+# TODO there's probably a correct way of keeping the container running.
+bash
