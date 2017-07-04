@@ -14,7 +14,8 @@ cp /alex-and-dave/nginx.conf /etc/nginx/nginx.conf
 mkdir -p /etc/nginx/private
 cp /alex-and-dave/nginx.crt /etc/nginx/private/default.crt;
 cp /alex-and-dave/nginx.key /etc/nginx/private/default.key;
-service nginx reload
+# TODO nginx service doesn't start properly, so we just do it manually here :-\
+nginx &
 
 couchUrl=http://admin:pass@localhost:5984
 ddocUrl=$couchUrl/medic/_design/medic

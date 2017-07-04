@@ -1,7 +1,5 @@
 .PHONY: default clean build run kill
 
-LOCAL_COUCH_PORT=5994
-
 default: build run
 
 clean:
@@ -19,8 +17,10 @@ build:
 run:
 	mkdir -p temp/root/couchdb
 	docker run -i -t \
-		-p ${LOCAL_COUCH_PORT}:5984 \
-		-p 5999:80 \
+		-p 8080:5984 \
+		-p 8081:5988 \
+		-p 8082:80 \
+		-p 8083:443 \
 		-v couchdb:/usr/local/var/lib/couchdb \
 		medix
 
