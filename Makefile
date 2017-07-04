@@ -1,15 +1,21 @@
-.PHONY: default build run kill
+.PHONY: default clean build run kill
 
 LOCAL_COUCH_PORT=5994
 
-default: build run
+default: clean build run
+
+clean:
+	rm -rf build
 
 build:
+	mkdir -p build/dist
+	cp -r src/root build/dist/
+	wget -c -o build/dist/ddoc.json 'https://staging.dev.medicmobile.org/_couch/builds/upgrades-from-api?attachments=true'
 	docker build --tag medix:whattt .
 
 run:
 	mkdir -p temp/root/couchdb
-	docker run \
+	docker run -i \
 		-p ${LOCAL_COUCH_PORT}:5984 \
 		-v couchdb:/usr/local/var/lib/couchdb \
 		-e COUCHDB_DBNAME=medic \
