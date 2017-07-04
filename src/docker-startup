@@ -9,8 +9,11 @@ is_200() {
 }
 
 # TODO maybe a database password?
-couchUrl=http://localhost:5984
+couchUrl=http://admin:pass@localhost:5984
 ddocUrl=$couchUrl/medic/_design/medic
+
+echo "[$0] Exposing nodejs executable to hipsters..."
+ln -s $(which nodejs) /usr/bin/node
 
 echo "[$0] Overwriting couch settings..."
 cp /alex-and-dave/local.ini /etc/couchdb/local.ini
@@ -43,7 +46,13 @@ is_200 "$ddocUrl" || (echo 'DDoc not found.' && exit 1)
 echo "[$0] Starting horticulturalist..."
 # TODO this should be done as a system.d service or whatever
 # TODO for now fork this into background
-adduser --system horticulturalist
-su horticulturalist -c horticulturalist &
+useradd horticulturalist
+mkdir /home/horticulturalist
+chown horticulturalist /home/horticulturalist
+chown horticulturalist /usr/local/lib/node_modules/horticulturalist
+# TODO this COUCH_URL should be unique to horticulturalist user and should contain specific user details.  Better yet, it wouldn't be an env var.
+export COUCH_URL="$couchUrl/medic"
+export COUCH_NODE_NAME="couchdb@localhost"
+su horticulturalist -c 'horticulturalist --local' &
 
 echo "[$0] Startup complete."
