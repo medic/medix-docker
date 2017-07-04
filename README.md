@@ -14,6 +14,10 @@ Run medic's stack using Docker.
 
 You can upgrade to any build of the medic stack available in the [builds repository](https://staging.dev.medicmobile.org/_couch/_utils/database.html?builds).
 
+## From admin UI
+
+If the current version supports it, browse to https://localhost:8083/medic/_design/medic/_rewrite/#/configuration/upgrade and use the upgrade UI.
+
 ## From local machine
 
 	curl --insecure \
