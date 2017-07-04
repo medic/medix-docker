@@ -16,8 +16,13 @@ You can upgrade to any build of the medic stack available in the [builds reposit
 
 ## From local machine
 
-	curl --insecure --header "Content-Type: application/json" https://admin:pass@localhost:8083/api/upgrade --data '{ "version": "upgrades-from-api" }'
+	curl --insecure \
+	     --header "Content-Type: application/json" \
+	     --data '{ "version": "upgrades-from-api" }' \
+	     https://admin:pass@localhost:8083/api/upgrade
 
 ## From inside container
 
-	curl --header "Content-Type: application/json" http://admin:pass@localhost:5988/api/upgrade --data '{ "version": "upgrades-from-api"
+	curl --header "Content-Type: application/json" \
+	     --data '{ "version": "upgrades-from-api" \
+	     http://admin:pass@localhost:5988/api/upgrade 
