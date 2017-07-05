@@ -10,6 +10,12 @@ Run medic's stack using Docker.
 1. make sure that docker is installed and running
 2. `make`
 
+# Accessing the webapp
+
+Webapp is served (via `nginx`) at https://localhost:8083
+
+N.B. Using the ports currently configured in `Makefile`, redirection from HTTP to HTTPS will not work, as nginx.conf does not currently have handling for non-standard ports.
+
 # Change version
 
 You can upgrade to any build of the medic stack available in the [builds repository](https://staging.dev.medicmobile.org/_couch/_utils/database.html?builds).
@@ -30,12 +36,6 @@ If the current version supports it, browse to https://localhost:8083/medic/_desi
 	curl --header "Content-Type: application/json" \
 	     --data '{ "version": "upgrades-from-api" \
 	     http://admin:pass@localhost:5988/api/upgrade
-
-# Accessing the webapp
-
-Webapp is served (via `nginx`) at https://localhost:8083
-
-N.B. Using the ports currently configured in `Makefile`, redirection from HTTP to HTTPS will not work, as nginx.conf does not currently have handling for non-standard ports.
 
 # TODO
 
