@@ -31,6 +31,12 @@ If the current version supports it, browse to https://localhost:8083/medic/_desi
 	     --data '{ "version": "upgrades-from-api" \
 	     http://admin:pass@localhost:5988/api/upgrade
 
+# Accessing the webapp
+
+Webapp is served (via `nginx`) at https://localhost:8083
+
+N.B. Using the ports currently configured in `Makefile`, redirection from HTTP to HTTPS will not work, as nginx.conf does not currently have handling for non-standard ports.
+
 # TODO
 
 * Make sure that horticulturalist restarts medic-api and medic-sentinel on upgrade
