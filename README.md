@@ -29,7 +29,7 @@ If the current version supports it, browse to https://localhost:8083/medic/_desi
 
 	curl --header "Content-Type: application/json" \
 	     --data '{ "version": "upgrades-from-api" \
-	     http://admin:pass@localhost:5988/api/upgrade 
+	     http://admin:pass@localhost:5988/api/upgrade
 
 # TODO
 
